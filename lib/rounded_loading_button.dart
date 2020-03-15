@@ -11,6 +11,8 @@ class RoundedLoadingButton extends StatefulWidget {
 
   final Color color;
 
+  final Color disabledColor;
+
   final double height;
 
   final double width;
@@ -26,7 +28,7 @@ class RoundedLoadingButton extends StatefulWidget {
     this.color = Colors.blue,
     this.height = 50,
     this.width = 300,
-    this.animateOnTap = true, this.elevation = 8,});
+    this.animateOnTap = true, this.elevation = 8, this.disabledColor,});
 
   @override
   State<StatefulWidget> createState() => RoundedLoadingButtonState();
@@ -90,6 +92,7 @@ class RoundedLoadingButtonState extends State<RoundedLoadingButton>
       minWidth: _squeezeAnimation.value,
       height: widget.height,
       child: RaisedButton(
+          disabledColor: widget.disabledColor,
           elevation: widget.elevation,
           child: _squeezeAnimation.value > 150 ? widget.child : _loader,
           color: widget.color,
