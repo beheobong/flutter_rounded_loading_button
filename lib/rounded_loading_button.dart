@@ -94,10 +94,12 @@ class RoundedLoadingButtonState extends State<RoundedLoadingButton>
           child: _squeezeAnimation.value > 150 ? widget.child : _loader,
           color: widget.color,
           onPressed: () async {
-            if (widget.animateOnTap) {
-              _start();
-            } else {
-              widget.onPressed();
+            if (widget.onPressed != null) {
+              if (widget.animateOnTap) {
+                _start();
+              } else {
+                widget.onPressed();
+              }
             }
           }),
     );
