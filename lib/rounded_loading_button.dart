@@ -17,15 +17,16 @@ class RoundedLoadingButton extends StatefulWidget {
 
   final bool animateOnTap;
 
-  RoundedLoadingButton(
-      {Key key,
-      this.controller,
-      this.onPressed,
-      this.child,
-      this.color = Colors.blue,
-      this.height = 50,
-      this.width = 300,
-      this.animateOnTap = true});
+  final double elevation;
+
+  RoundedLoadingButton({Key key,
+    this.controller,
+    this.onPressed,
+    this.child,
+    this.color = Colors.blue,
+    this.height = 50,
+    this.width = 300,
+    this.animateOnTap = true, this.elevation = 8,});
 
   @override
   State<StatefulWidget> createState() => RoundedLoadingButtonState();
@@ -49,15 +50,15 @@ class RoundedLoadingButtonState extends State<RoundedLoadingButton>
         decoration: new BoxDecoration(
           color: widget.color,
           borderRadius:
-              new BorderRadius.all(Radius.circular(_bounceAnimation.value / 2)),
+          new BorderRadius.all(Radius.circular(_bounceAnimation.value / 2)),
         ),
         width: _bounceAnimation.value,
         height: _bounceAnimation.value,
         child: _bounceAnimation.value > 20
             ? Icon(
-                Icons.check,
-                color: Colors.white,
-              )
+          Icons.check,
+          color: Colors.white,
+        )
             : null);
 
     var _cross = Container(
@@ -65,15 +66,15 @@ class RoundedLoadingButtonState extends State<RoundedLoadingButton>
         decoration: new BoxDecoration(
           color: Colors.red,
           borderRadius:
-              new BorderRadius.all(Radius.circular(_bounceAnimation.value / 2)),
+          new BorderRadius.all(Radius.circular(_bounceAnimation.value / 2)),
         ),
         width: _bounceAnimation.value,
         height: _bounceAnimation.value,
         child: _bounceAnimation.value > 20
             ? Icon(
-                Icons.close,
-                color: Colors.white,
-              )
+          Icons.close,
+          color: Colors.white,
+        )
             : null);
 
     var _loader = SizedBox(
@@ -85,10 +86,11 @@ class RoundedLoadingButtonState extends State<RoundedLoadingButton>
 
     var _btn = ButtonTheme(
       shape:
-          RoundedRectangleBorder(borderRadius: new BorderRadius.circular(35)),
+      RoundedRectangleBorder(borderRadius: new BorderRadius.circular(35)),
       minWidth: _squeezeAnimation.value,
       height: widget.height,
       child: RaisedButton(
+          elevation: widget.elevation,
           child: _squeezeAnimation.value > 150 ? widget.child : _loader,
           color: widget.color,
           onPressed: () async {
@@ -103,7 +105,7 @@ class RoundedLoadingButtonState extends State<RoundedLoadingButton>
     return Container(
         height: widget.height,
         child:
-            Center(child: _isErrored ? _cross : _isSuccessful ? _check : _btn));
+        Center(child: _isErrored ? _cross : _isSuccessful ? _check : _btn));
   }
 
   @override
@@ -123,9 +125,10 @@ class RoundedLoadingButtonState extends State<RoundedLoadingButton>
       setState(() {});
     });
 
-    _squeezeAnimation = Tween<double>(begin: widget.width, end: widget.height).animate(
-        new CurvedAnimation(
-            parent: _buttonController, curve: Curves.easeInOutCirc));
+    _squeezeAnimation =
+        Tween<double>(begin: widget.width, end: widget.height).animate(
+            new CurvedAnimation(
+                parent: _buttonController, curve: Curves.easeInOutCirc));
     _squeezeAnimation.addListener(() {
       setState(() {});
     });
@@ -181,8 +184,7 @@ class RoundedLoadingButtonController {
   VoidCallback _errorListener;
   VoidCallback _resetListener;
 
-  _addListeners(
-      VoidCallback startListener,
+  _addListeners(VoidCallback startListener,
       VoidCallback stopListener,
       VoidCallback successListener,
       VoidCallback errorListener,
